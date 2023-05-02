@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+
+int adjMatrix[MAX_SIZE][MAX_SIZE];
+int visited[MAX_SIZE];
+
+void DFS(int v, int n) {
+    visited[v] = 1;
+    for(int i=0; i<n; i++) {
+        if(adjMatrix[v][i] == 1 && visited[i] == 0) {
+            DFS(i, n);
+        }
+    }
+}
+
+int isConnected(int n) {
+    for(int i=0; i<n; i++) {
+        visited[i] = 0;
+    }
+    DFS(0, n);
+    for(int i=0; i<n; i++) {
+        if(visited[i] == 0) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int n;
+    printf("Enter the number of vertices in the graph: ");
+    scanf("%d", &n);
+    printf("Enter the adjacency matrix of the graph:\n");
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+            scanf("%d", &adjMatrix[i][j]);
+        }
+    }
+    if(isConnected(n)) {
+        printf("The graph is connected.\n");
+    } else {
+        printf("The graph is not connected.\n");
+    }
+    return 0;
+}

@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+#define MAX_NODES 100
+
+struct Queue {
+    int items[MAX_NODES];
+    int front;
+    int rear;
+};
+
+struct Queue* createQueue() {
+    struct Queue* queue = (struct Queue*)malloc(sizeof(struct Queue));
+    queue->front = -1;
+    queue->rear = -1;
+    return queue;
+}
+
+int isEmpty(struct Queue* queue) {
+    if (queue->rear == -1) return 1;
+    return 0;
+}
+
+void enqueue(struct Queue* queue, int value) {
+    if (queue->rear == MAX_NODES - 1) {
+        printf("Queue overflow!\n");
+        return;
+    }
+    if (queue->front == -1) queue->front = 0;
+    queue->rear++;
+    queue->items[queue->rear] = value;
+}
+
+int dequeue(struct Queue* queue) {
+    if (isEmpty(queue)) {
+        printf("Queue underflow!\n");
+        return -1;
+    }
+    int item = queue->items[queue->front];
+    queue->front++;
+    if (queue->front > queue->rear) {
+        queue->front = -1;
+        queue->rear = -1;
+    }
+    return item;
+}
+
+void initGraph(int graph[][MAX_NODES], int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            graph[i][j] = 0;
+        }
+    }
+}
+
+void addEdge(int graph[][MAX_NODES], int u, int v) {
+    graph[u][v] = 1;
+}
+
+void BFS(int graph[][MAX_NODES], int n, int start) {
+    int visited[MAX_NODES] = {0};
+    struct Queue* queue = createQueue();
+    visited[start] = 1;
+    enqueue(queue, start);
+    while (!isEmpty(queue)) {
+        int current = dequeue(queue);
+        printf("%d ", current);
+        for (int i = 0; i < n; i++) {
+            if (graph[current][i] == 1 && visited[i] == 0) {
+                visited[i] = 1;
+                enqueue(queue, i);
+            }
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int n, start, u, v;
+    int graph[MAX_NODES][MAX_NODES];
+    printf("Enter the number of nodes in the graph: ");
+    scanf("%d", &n);
+    initGraph(graph, n);
+    printf("Enter the edges of the graph (enter -1 to end):\n");
+    while (1) {
+        scanf("%d %d", &u, &v);
+        if (u == -1 || v == -1) break;
+        addEdge(graph, u, v);
+    }
+    printf("Enter the starting node: ");
+    scanf("%d", &start);
+    printf("Nodes reachable from node %d using BFS: ", start);
+}
