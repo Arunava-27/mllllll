@@ -1,0 +1,62 @@
+import math
+def sigmoid(x):
+    k=int(input("Enter the slope of the sigmoid: "))
+    z= (1/(1+math.exp(-k*x)))
+    return z
+def relu(x):
+    z=x if x>=0 else 0
+    return(z)
+def tanH(x):
+    z=((math.exp(x)-math.exp(-x))/(math.exp(x)+math.exp(-x)))
+    return z
+def step(x):
+    t=int(input("Enter the value of the threshold: "))
+    z=1 if x>=t else 0
+    return z
+x1=int(input("Enter the value of Data 1: "))
+x2=int(input("Enter the value of Data 2: "))
+w0=int(input("Enter the value of the Bias: "))
+w1=int(input("Enter the value of Weight 1: "))
+w2=int(input("Enter the value of Weight 2: "))
+add=x1*w1 + x2*w2 + w0
+print()
+print("1. Logistic Activation Function")
+print("2. Hyperbolic Tangent Activation Function")
+print("3. Rectified Linear Unit Activation Function")
+print("4. Threshold Activation Function")
+print()
+c=int(input("Enter desired choice: "))
+print()
+if c==1:
+    print("Activation Function is Logistic Function")
+    y=sigmoid(add)
+    if(y>0):
+        print(y,"\nClass 1")
+    else:
+        print(y,"\nClass 2")
+elif c==2:
+    print("Activation Function is Hyperbolic Tangent Function")
+    y=tanH(add)
+    if(y>0):
+        print(y,"\nClass 1")
+    else:
+        print(y,"\nClass 2")
+elif c==3:
+    print("Activation Function is Rectified Linear Unit Function")
+    y=relu(add)
+    if(y>0):
+        print(y,"\nClass 1")
+    else:
+        print(y,"\nClass 2")
+elif c==4:
+    print("Activation Function is Threshold Function")
+    y=step(add)
+    if(y>0):
+        print(y,"\nClass 1")
+    else:
+        print(y,"\nClass 2")
+else:
+    print("Invaid Input, please try again.")
+print()
+print("Ending Program...")
+ 
