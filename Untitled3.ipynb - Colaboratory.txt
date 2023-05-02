@@ -1,0 +1,25 @@
+import io
+from google.colab import drive
+drive.mount("/content/drive/")
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import Perceptron
+
+
+df={"No_of_bedrooms":[4,2,4,3,5,6],
+"Size_of_apartment":[4720,2430,4368,3969,6142,7912],
+"Location":[3,3,2,1,3,2],
+"Age":[10,5,15,8,12,9],
+"Price":[10000000,5000000,7000000,6000000,14000000,17000000]
+}
+df=pd.DataFrame(df)
+df
+
+
+X = df[['No_of_bedrooms','Size_of_apartment','Location','Age'] ]
+y = df[['Price']]
+per_clf = Perceptron()
+per_clf.fit(X.values, y)
+
+predict = per_clf.predict([[2,2000,2,3]])
+predict
